@@ -285,3 +285,7 @@ Hindi      Basic
 <br/>
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=6244c5&height=140&section=footer&animation=twinkling&fontColor=ffc448"/>
+
+
+
+d
