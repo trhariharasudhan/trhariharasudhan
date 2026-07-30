@@ -1,0 +1,56 @@
+# ==============================================================================
+# GitHub Metrics Workflow (lowlighter/metrics)
+# ==============================================================================
+# SETUP INSTRUCTIONS:
+# 1. Create a Personal Access Token (PAT) or Classic Token with scopes:
+#    - public_repo (or repo if including private statistics)
+#    - read:user
+# 2. Store the token as a GitHub Actions Repository Secret:
+#    - Navigate to Settings -> Secrets and variables -> Actions
+#    - Add a New repository secret named `METRICS_TOKEN`
+# 3. Security Warning: Never commit personal access tokens directly into code.
+# ==============================================================================
+
+name: Generate GitHub Metrics
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/metrics.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate metrics
+        uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          committer_token: ${{ github.token }}
+          user: trhariharasudhan
+          filename: assets/github-metrics.svg
+          base: header, activity, community, repositories, metadata
+          config_timezone: Asia/Kolkata
+          config_output: svg
+          config_animations: yes
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
+          plugin_languages: yes
+          plugin_languages_limit: 8
+          plugin_habits: yes
+          plugin_habits_facts: yes
+          plugin_habits_charts: yes
+          plugin_activity: yes
+          plugin_activity_limit: 5
+          plugin_achievements: yes
+          plugin_achievements_display: compact
+          plugins_errors_fatal: no
+          output_action: commit
